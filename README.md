@@ -1,6 +1,11 @@
 # hashdistinct
 It is simple utility for deletion duplications.
 
+## Installation
+```
+cargo install hashdistinct
+```
+
 ## Usage
 It is simple as ls. Just look at the usage:
 

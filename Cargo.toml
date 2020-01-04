@@ -2,7 +2,7 @@
 name        = "hashdistinct"
 description = "Utility for deletion duplications using SHA256/SHA384/SHA512/SHA512_256 sum"
 repository  = "https://github.com/starfear/hashdistinct"
-version     = "0.2.0"
+version     = "0.3.0"
 authors     = ["starfear <starfear@outlook.com>"]
 keywords    = ["cli", "hash", "search", "utility"]
 edition     = "2018"

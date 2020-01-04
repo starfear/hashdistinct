@@ -34,7 +34,7 @@ fn error(silent: bool, msg: &str) {
 
 fn main() -> Result<()> {
     let matches = App::new("Distinct Hash")
-                    .version("0.1.0")
+                    .version("0.3.0")
                     .author("Starfear https://github.com/starfear")
                     .about("Utility for deletion duplications with same hash.")
                     .arg(Arg::with_name("silent")

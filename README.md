@@ -1,4 +1,4 @@
-#hash-distinct
+#hashdistinct
 It is simple utility for deletion duplications.
 
 ##Usage

@@ -1,7 +1,7 @@
-#hashdistinct
+# hashdistinct
 It is simple utility for deletion duplications.
 
-##Usage
+## Usage
 It is simple as ls. Just look at the usage:
 
 ```
@@ -24,8 +24,7 @@ ARGS:
     <targets>...    targets
 ```
 
-##Usage examples
-
+## Usage examples
 ```
 # raw
 hashdistinct foo.webm bar.webm too.webm
@@ -40,13 +39,11 @@ hashdistinct webms/* -a SHA512_256
 hashdistinct webms/* -a SHA512_256 --silent
 ```
 
-##Contribute
-
+## Contribute
 Seems like this software doesn't have to be improved, but I don't mind to add support for md5 and other non-ring algorithms.
 Pull requests and issues are welcome.
 
-##License
-
+## License
 ```
                    GNU LESSER GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007

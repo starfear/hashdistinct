@@ -25,6 +25,7 @@ ARGS:
 ```
 
 ##Usage examples
+
 ```
 # raw
 hashdistinct foo.webm bar.webm too.webm
@@ -40,10 +41,12 @@ hashdistinct webms/* -a SHA512_256 --silent
 ```
 
 ##Contribute
+
 Seems like this software doesn't have to be improved, but I don't mind to add support for md5 and other non-ring algorithms.
 Pull requests and issues are welcome.
 
 ##License
+
 ```
                    GNU LESSER GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007

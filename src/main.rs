@@ -4,7 +4,7 @@ use {
     colored::{Colorize},
 
     std::{
-        collections::{HashMap},
+        collections::{HashMap, BTreeMap},
         fs::{File},
         io::{Result, BufReader, Read}
     },
@@ -68,53 +68,40 @@ fn main() -> Result<()> {
         }
     };
 
-    // calculate hashes
-    let mut map: HashMap<Vec<u8>, Vec<String>> = HashMap::new();
+    // collect meta data
+    let targets = matches.values_of("targets").unwrap();
+    status(silent, "Collecting metadata (size) . . .");
 
+    let mut sizes: BTreeMap<u64, Vec<&str>> = BTreeMap::new();
+    for target in targets {
+        let meta = std::fs::metadata(target)?;
+
+        match sizes.get_mut(&meta.len()) {
+            Some(v) => v.push(target),
+            None    => { sizes.insert(meta.len(), vec![target]); }
+        };
+    }
+
+    // calculate hashes
     status(silent, "Calculating hashes . . .");
 
-    let targets = matches.values_of("targets").unwrap();
-    let tlen    = targets.len();
-
     let mut to_remove = Vec::new();
+    
+    for (size, mut targets) in sizes {
+        if targets.len() == 1 { continue; }
 
-    for (index, target) in targets.enumerate() {
-        info(silent, &format!("{:50.50} : {:?}%", target, (index*100)/tlen));
-
-        // open file
-        let file   = match File::open(&target) {
-            Ok(v)  => v,
-            Err(e) => {
-                eprintln!("{} Failed to read file {:?}: '{}'", "ERROR".red(), target, e);
-                
-                continue;
-            }
-        };
-
-        let reader = BufReader::new(&file);
-        let sum    = match sum(reader, &algorithm) {
-            Ok(v) => v,
-            Err(e) => {
-                eprintln!("{} Failed to read file {:?}: '{}'", "ERROR".red(), target, e);
-                
-                continue;
-            }
-        };
-        let sum    = sum.as_ref();
-
-        match map.get_mut(sum) {
-            Some(_) => {
+        info(silent, &format!("Size: {}, els: {}", size, targets.len()));
+        let hash = sum(BufReader::new(File::open(targets.remove(0))?), algorithm)?.as_ref().to_vec();
+    
+        for target in targets {
+            if hash == sum(BufReader::new(File::open(target)?), algorithm)?.as_ref() {
+                info(silent, &format!("Found duplicate: {}", target));
                 to_remove.push(target);
-            },
-
-            None => {
-                map.insert(sum.to_vec(), vec![target.into()]);
             }
         }
     }
 
-    status(silent, "Calculating hashes done!");
-    info(silent, &format!("Total files: {}, files to delete: {}", tlen.to_string().blue(), to_remove.len().to_string().red()));
+    info(silent, &format!("Files to delete: {}", to_remove.len().to_string().red()));
 
     for target in to_remove {
         info(silent, &format!("Delete file {:?}", target));

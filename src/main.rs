@@ -4,7 +4,7 @@ use {
     colored::{Colorize},
 
     std::{
-        collections::{HashMap, BTreeMap},
+        collections::{BTreeMap},
         fs::{File},
         io::{Result, BufReader, Read}
     },

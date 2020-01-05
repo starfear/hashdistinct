@@ -10,7 +10,7 @@ cargo install hashdistinct
 It is simple as ls. Just look at the usage:
 
 ```
-Distinct Hash 0.3.3
+Distinct Hash 0.4.0
 Starfear https://github.com/starfear
 Utility for deletion duplications with same hash.
 
